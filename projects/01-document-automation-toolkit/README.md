@@ -39,7 +39,7 @@ Both datasets contain three valid records and one deliberately invalid row. The 
 
 ## Example output
 
-The repository includes three editable DOCX examples plus the generated manifest/rejection reports. The generator can also produce matching PDFs; PDF output is exercised in the automated tests and CI workflow rather than stored as duplicate binary examples.
+The repository includes three editable DOCX examples, three matching PDF examples, the generation manifest, the rejection report and a machine-readable run summary. A reviewer can inspect the deliverables directly without running the code first.
 
 ## Run with CSV
 
