@@ -1,4 +1,4 @@
-record_id,file,status
-PRJ-001,PRJ_001_Quarterly_Operations_Summary.docx,generated
-PRJ-002,PRJ_002_Client_Data_Migration_Brief.docx,generated
-PRJ-003,PRJ_003_Automation_Delivery_Note.docx,generated
+record_id,docx_file,pdf_file,status
+PRJ-001,PRJ_001_Quarterly_Operations_Summary.docx,PRJ_001_Quarterly_Operations_Summary.pdf,generated
+PRJ-002,PRJ_002_Client_Data_Migration_Brief.docx,PRJ_002_Client_Data_Migration_Brief.pdf,generated
+PRJ-003,PRJ_003_Automation_Delivery_Note.docx,PRJ_003_Automation_Delivery_Note.pdf,generated

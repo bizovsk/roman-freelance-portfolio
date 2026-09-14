@@ -1,19 +1,28 @@
 # Validation matrix
 
-This demonstration is tested as a **data-to-document workflow**, not merely as a set of static Word files.
+This project is validated as a **data-to-document workflow**, not just a collection of static files.
 
 | Check | Expected result | Status |
 |---|---|---|
-| Valid batch generation | 3 valid input rows create 3 DOCX files | Passed |
-| Invalid input isolation | Missing required fields are rejected and reported | Passed |
+| CSV input | Valid CSV records are read and normalized | Passed |
+| XLSX input | Typed Excel records from an explicit worksheet are read and normalized | Passed |
+| Missing columns | Missing required input columns fail fast | Passed |
+| Valid batch generation | 3 valid source rows generate deliverables | Passed |
+| Invalid input isolation | Invalid rows are rejected and reported | Passed |
+| Duplicate identity | Duplicate `record_id` values are rejected | Passed |
 | Date validation | Non-ISO dates are flagged | Passed |
+| Date ordering | `due_on < created_on` is rejected | Passed |
+| Metrics validation | Metrics must use `Label=Value` structure | Passed |
 | Optional content | Empty optional sections are omitted | Passed |
-| Structured metrics | CSV key/value metrics become native Word tables | Passed |
-| Reusable structure | Native paragraphs, styles, tables and lists | Passed |
-| No floating text boxes | Core content remains editable and reflows | Passed |
+| DOCX structure | Native paragraphs, styles, tables and lists | Passed |
+| No floating text boxes | Core Word content remains editable and reflows | Passed |
+| PDF generation | Matching PDF output is produced | Passed |
 | Manifest | Successful outputs are listed separately | Passed |
-| Visual rendering | Every generated DOCX renders cleanly | Passed |
-| Automated tests | 6 tests pass | Passed |
+| Rejection report | Rejected records include source row and reason | Passed |
+| Run summary | Machine-readable JSON summary is created | Passed |
+| Visual DOCX QA | Generated DOCX examples render cleanly | Passed |
+| Visual PDF QA | Generated PDF examples render cleanly | Passed |
+| Automated tests | 12 tests pass | Passed |
 
 ## Scope note
 

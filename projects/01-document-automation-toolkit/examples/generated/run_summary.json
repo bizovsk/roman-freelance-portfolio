@@ -1,0 +1,16 @@
+{
+  "input_file": "records.xlsx",
+  "input_type": "xlsx",
+  "sheet": "Records",
+  "requested_output_format": "both",
+  "records_seen": 4,
+  "records_generated": 3,
+  "records_rejected": 1,
+  "brand": {
+    "organisation": "Northstar Works",
+    "tagline": "Structured information. Reliable outputs.",
+    "accent_hex": "2E6670",
+    "primary_hex": "17324D",
+    "footer": "northstar.example"
+  }
+}

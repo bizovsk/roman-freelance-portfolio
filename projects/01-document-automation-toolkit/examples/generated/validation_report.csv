@@ -1,2 +1,2 @@
-record_id,errors
-INVALID-01,Missing required field: document_title
+source_row,record_id,errors
+5,INVALID-01,Missing required field: document_title
