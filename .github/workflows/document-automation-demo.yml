@@ -1,0 +1,36 @@
+name: Validate document automation demo
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/01-document-automation-toolkit/**'
+      - '.github/workflows/document-automation-demo.yml'
+  pull_request:
+    paths:
+      - 'projects/01-document-automation-toolkit/**'
+      - '.github/workflows/document-automation-demo.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: python -m pip install -r projects/01-document-automation-toolkit/requirements.txt
+      - name: Generate demo documents
+        run: |
+          python projects/01-document-automation-toolkit/src/generate_documents.py \
+            --input projects/01-document-automation-toolkit/examples/records.csv \
+            --brand projects/01-document-automation-toolkit/examples/brand.json \
+            --output /tmp/document-automation-demo
+      - name: Run automated tests
+        env:
+          PYTHONPATH: projects/01-document-automation-toolkit
+        run: pytest -q projects/01-document-automation-toolkit/tests
