@@ -24,12 +24,21 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: python -m pip install -r projects/01-document-automation-toolkit/requirements.txt
-      - name: Generate demo documents
+      - name: Generate from CSV
         run: |
           python projects/01-document-automation-toolkit/src/generate_documents.py \
             --input projects/01-document-automation-toolkit/examples/records.csv \
             --brand projects/01-document-automation-toolkit/examples/brand.json \
-            --output /tmp/document-automation-demo
+            --output /tmp/document-automation-csv \
+            --format both
+      - name: Generate from XLSX
+        run: |
+          python projects/01-document-automation-toolkit/src/generate_documents.py \
+            --input projects/01-document-automation-toolkit/examples/records.xlsx \
+            --sheet Records \
+            --brand projects/01-document-automation-toolkit/examples/brand.json \
+            --output /tmp/document-automation-xlsx \
+            --format both
       - name: Run automated tests
         env:
           PYTHONPATH: projects/01-document-automation-toolkit
