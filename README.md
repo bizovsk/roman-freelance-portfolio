@@ -8,10 +8,10 @@ I use AI-assisted development where it is useful, but each published deliverable
 
 | Project | What it demonstrates | Status |
 |---|---|---|
-| [Business Document Automation Toolkit](projects/01-document-automation-toolkit/) | CSV validation, batch DOCX generation, conditional content, error reporting | **Published** |
+| [Business Document Automation Toolkit](projects/01-document-automation-toolkit/) | CSV/XLSX validation, batch DOCX/PDF generation, conditional content, error reporting | **Published** |
 | Data Cleaning & Reconciliation | Python, Excel/CSV cleaning, duplicates, conflict reporting | Planned |
-| CSV to PDF Automation | Repeatable processing and document generation | Planned |
 | API Data Pipeline | API extraction, validation, transformation and export | Planned |
+| Workflow Automation | Multi-step file processing, business rules and repeatable outputs | Planned |
 
 ## Working approach
 
