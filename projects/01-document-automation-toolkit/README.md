@@ -2,59 +2,81 @@
 
 > **Portfolio demonstration project.** All organisations, records and content are fictional or synthetic. This project is not presented as prior client work.
 
-A small document-automation system that turns structured CSV data into consistent, editable Microsoft Word documents while separating invalid input for review.
+A reusable data-to-document workflow that accepts **CSV or Excel (.xlsx)** input, validates records before generation, and produces consistent **editable DOCX and PDF** deliverables plus explicit processing reports.
 
-## What it demonstrates
+## Business problem
 
-This project is intentionally general rather than modelled on a particular company or job brief. It demonstrates a reusable workflow that can be adapted to many document-heavy processes:
+Teams often maintain operational data in spreadsheets and then manually copy the same information into reports, delivery notes, summaries or client documents. That process is slow, difficult to audit and prone to copy/paste errors.
 
-**structured input → validation → document generation → manifest / error report**
+This project demonstrates a safer pattern:
 
-The demo reads records from CSV, applies a lightweight brand configuration from JSON and creates one DOCX file per valid record.
+**CSV / XLSX → schema checks → record validation → DOCX + PDF → manifest / rejection report**
 
-## Behaviour
+## What it does
 
-- required fields are validated before generation;
-- invalid dates and missing required values are reported instead of guessed;
-- optional sections are omitted when no data is provided;
-- key/value metrics become native Word tables;
-- next steps become native numbered lists;
-- headers, footers and page numbers use native Word structure;
-- generated files remain editable and do not rely on floating text boxes for core content.
+- accepts `.csv` and `.xlsx` source files;
+- supports explicit worksheet selection for multi-sheet Excel workbooks;
+- fails fast when required input columns are missing;
+- validates required fields and ISO dates;
+- rejects due dates earlier than creation dates;
+- detects duplicate record IDs instead of silently overwriting outputs;
+- validates structured `Label=Value` metrics;
+- omits optional document sections when their source data is empty;
+- creates native Word tables/lists and editable `.docx` files;
+- creates matching `.pdf` deliverables;
+- writes a generation manifest, rejection report and JSON run summary.
 
-## Demonstration data
+## Demonstration input
 
-[`examples/records.csv`](examples/records.csv) contains synthetic records with different content lengths and one deliberately invalid row.
+Two equivalent synthetic examples are provided:
 
-[`examples/brand.json`](examples/brand.json) contains a fictional organisation name and simple brand settings.
+- [`examples/records.csv`](examples/records.csv)
+- [`examples/records.xlsx`](examples/records.xlsx), worksheet `Records`
 
-The example output contains:
+The Excel example is deliberately presented as a normal business workbook rather than a raw machine export. It contains an instruction sheet, formatted headers, frozen panes and typed date cells.
 
-- three generated DOCX files;
-- `generation_manifest.csv` listing successful outputs;
-- `validation_report.csv` explaining why the invalid row was rejected.
+Both datasets contain three valid records and one deliberately invalid row. The invalid row is rejected because its required `document_title` is missing.
 
-## Run locally
+## Example output
+
+The repository includes three editable DOCX examples plus the generated manifest/rejection reports. The generator can also produce matching PDFs; PDF output is exercised in the automated tests and CI workflow rather than stored as duplicate binary examples.
+
+## Run with CSV
 
 ```bash
 python -m pip install -r requirements.txt
 python src/generate_documents.py \
   --input examples/records.csv \
   --brand examples/brand.json \
-  --output examples/generated
-pytest -q
+  --output examples/generated \
+  --format both
 ```
 
-## Validation
+## Run with Excel
 
-Automated tests cover successful batch generation, invalid-input rejection, optional-section handling, date validation, metric parsing and native DOCX structure.
+```bash
+python src/generate_documents.py \
+  --input examples/records.xlsx \
+  --sheet Records \
+  --brand examples/brand.json \
+  --output examples/generated \
+  --format both
+```
 
-The generated examples are also rendered during development for visual QA. The same generator can be rerun with different synthetic input to verify that layout and validation behaviour are not tied to one fixed dataset.
+`--format` accepts `docx`, `pdf` or `both`.
 
-## Why this project exists
+## Validation approach
 
-The commercial value is not the presence of a Word file. It is the ability to turn structured information into repeatable business documents without manually copying values into each document, while making data problems visible instead of silently inventing replacements.
+The generator treats uncertain or malformed input as a data-quality problem rather than something to guess around. A record with invalid dates, duplicate identity or malformed metrics is isolated in the validation report and no document is generated for that record.
+
+The automated test suite covers both input formats, generated DOCX/PDF structure, duplicate handling, date rules, strict metrics parsing, missing columns and optional sections. Generated examples are also rendered during development for visual QA.
+
+See [`TEST_MATRIX.md`](TEST_MATRIX.md) for the acceptance matrix.
 
 ## Tools
 
-`Python` · `CSV` · `JSON` · `python-docx` · `pytest` · `Microsoft Word / DOCX structure`
+`Python` · `CSV` · `Excel/XLSX` · `openpyxl` · `python-docx` · `ReportLab` · `pytest`
+
+## Deliberate scope
+
+This is a public demonstration, not a universal document platform. It intentionally does not include client-specific mappings, credentials, databases, email delivery, private workflow integrations or a reusable commercial engine.
